@@ -13,5 +13,5 @@ class UserModel (
     var appaterno: String? = null,
     var apmaterno: String? = null,
     var gmail: String? = null,
-    var password: String? = null,){
+    var password: String? = null){
 }
