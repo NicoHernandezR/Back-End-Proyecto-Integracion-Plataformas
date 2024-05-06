@@ -1,6 +1,7 @@
 package api.ferremas.ferrmas.usuario
 
 import org.springframework.web.bind.annotation.*
+import api.ferremas.ferrmas.usuario.UserModel
 
 
 @RestController

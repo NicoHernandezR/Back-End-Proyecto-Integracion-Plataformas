@@ -2,6 +2,7 @@ package api.ferremas.ferrmas.usuario
 
 import api.ferremas.ferrmas.tipoUsuario.TipoUsuarioModel
 import jakarta.persistence.*
+import api.ferremas.ferrmas.usuario.UserModel
 
 
 @Entity
@@ -13,5 +14,9 @@ class UserModel (
     var appaterno: String? = null,
     var apmaterno: String? = null,
     var gmail: String? = null,
-    var password: String? = null){
+    var password: String? = null,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipoUsuarioId")
+    val tipoUsuario: TipoUsuarioModel)
+{
 }

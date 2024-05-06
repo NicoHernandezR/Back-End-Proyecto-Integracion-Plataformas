@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface herramientaRepository : JpaRepository<herramientaModel, Long> {
 
-    fun findByTipoHerramienta(tipo_herramienta : String) : herramientaModel?
+    fun findByTipoHerramienta(tipoHerramienta : String) : herramientaModel?
 }

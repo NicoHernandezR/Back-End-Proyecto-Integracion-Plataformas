@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ventaDetalleRepository : JpaRepository<ventaDetalleModel, Long> {
 
-    fun findByCant_producto(cant_producto : Number) : ventaDetalleModel?
+    fun findByCantProducto(cantProducto : Number) : ventaDetalleModel?
 
-    fun findByPrecio_detalle(precio_detalle : Double) : ventaDetalleModel?
+    fun findByPrecioDetalle(precioDetalle : Double) : ventaDetalleModel?
 
 }
