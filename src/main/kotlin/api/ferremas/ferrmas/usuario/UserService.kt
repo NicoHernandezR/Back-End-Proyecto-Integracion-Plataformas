@@ -1,7 +1,7 @@
 package api.ferremas.ferrmas.usuario
 
 import org.springframework.stereotype.Service
-
+import api.ferremas.ferrmas.usuario.UserModel
 
 
 @Service

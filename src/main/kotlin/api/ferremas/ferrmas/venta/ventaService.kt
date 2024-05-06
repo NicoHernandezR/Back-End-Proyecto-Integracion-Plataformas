@@ -7,7 +7,7 @@ import java.util.Date
 class ventaService(val ventaRepository: ventaRepository){
 
     fun getVentaByPrecioTotal(precio_total:Double): ventaModel? {
-        return ventaRepository.findByPrecio_total(precio_total)
+        return ventaRepository.findByPrecioTotal(precio_total)
     }
 
     fun getVentaByEstado(estado:String): ventaModel? {
@@ -15,7 +15,7 @@ class ventaService(val ventaRepository: ventaRepository){
     }
 
     fun getVentaByFecha(fecha_venta: Date): ventaModel? {
-        return ventaRepository.findByFecha_venta(fecha_venta)
+        return ventaRepository.findByFechaVenta(fecha_venta)
     }
 
     fun saveVenta(venta: ventaModel): ventaModel {

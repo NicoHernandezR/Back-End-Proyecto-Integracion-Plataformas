@@ -5,9 +5,9 @@ import java.util.Date
 
 interface ventaRepository : JpaRepository<ventaModel, Long> {
 
-    fun findByPrecio_total(precio_total : Double): ventaModel?
+    fun findByPrecioTotal(precioTotal : Double): ventaModel?
 
     fun findByEstado(estado : String) : ventaModel?
 
-    fun findByFecha_venta(fecha_venta : Date) : ventaModel?
+    fun findByFechaVenta(fechaVenta : Date) : ventaModel?
 }
