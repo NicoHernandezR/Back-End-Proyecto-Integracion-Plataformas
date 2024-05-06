@@ -6,15 +6,15 @@ import java.util.Date
 @Service
 class ventaService(val ventaRepository: ventaRepository){
 
-    fun getVenta(precio_total:Double): ventaModel? {
+    fun getVentaByPrecioTotal(precio_total:Double): ventaModel? {
         return ventaRepository.findByPrecio_total(precio_total)
     }
 
-    fun getVenta(estado:String): ventaModel? {
+    fun getVentaByEstado(estado:String): ventaModel? {
         return ventaRepository.findByEstado(estado)
     }
 
-    fun getVenta(fecha_venta: Date): ventaModel? {
+    fun getVentaByFecha(fecha_venta: Date): ventaModel? {
         return ventaRepository.findByFecha_venta(fecha_venta)
     }
 

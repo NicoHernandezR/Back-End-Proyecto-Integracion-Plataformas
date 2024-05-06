@@ -10,12 +10,12 @@ class ventaDetalleController (val ventaDetalleService: ventaDetalleService){
 
     @GetMapping("/{cant_producto}")
     fun getCantProducto(@PathVariable cant_producto:Number): ventaDetalleModel?{
-        return ventaDetalleService.getVentaDetalle(cant_producto)
+        return ventaDetalleService.getVentaDetalleByCantidadProducto(cant_producto)
     }
 
     @GetMapping("/{precio_detalle}")
     fun getCantProducto(@PathVariable precio_detalle:Double): ventaDetalleModel?{
-        return ventaDetalleService.getVentaDetalle(precio_detalle)
+        return ventaDetalleService.getVentaDetalleByPrecioDetalle(precio_detalle)
     }
 
     @GetMapping

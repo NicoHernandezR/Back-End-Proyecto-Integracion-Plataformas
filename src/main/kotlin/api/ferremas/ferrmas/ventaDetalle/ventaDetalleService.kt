@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service
 @Service
 class ventaDetalleService (val ventaDetalleRepository: ventaDetalleRepository){
 
-    fun getVentaDetalle(cant_producto:Number): ventaDetalleModel? {
+    fun getVentaDetalleByCantidadProducto(cant_producto:Number): ventaDetalleModel? {
         return ventaDetalleRepository.findByCant_producto(cant_producto)
     }
 
-    fun getVentaDetalle(precio_detalle:Double): ventaDetalleModel? {
+    fun getVentaDetalleByPrecioDetalle(precio_detalle:Double): ventaDetalleModel? {
         return ventaDetalleRepository.findByPrecio_detalle(precio_detalle)
     }
 

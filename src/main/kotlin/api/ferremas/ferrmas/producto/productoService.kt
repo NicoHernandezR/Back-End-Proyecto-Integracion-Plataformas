@@ -10,7 +10,7 @@ class productoService (val productoRepository: productoRepository){
         return productoRepository.findByNombre(nombre)
     }
 
-    fun getProducto(precio:Double): productoModel? {
+    fun getProductoByPrecio(precio:Double): productoModel? {
         return productoRepository.findByPrecio(precio)
     }
 
@@ -18,7 +18,7 @@ class productoService (val productoRepository: productoRepository){
         return productoRepository.findByDescripcion(descripcion)
     }
 
-    fun getProducto(stock:Number): productoModel? {
+    fun getProductoByStock(stock:Number): productoModel? {
         return productoRepository.findByStock(stock)
     }
 

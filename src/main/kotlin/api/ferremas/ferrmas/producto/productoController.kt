@@ -14,7 +14,7 @@ class productoController (val productoService: productoService){
 
     @GetMapping("/{precio}")
     fun getPrecio(@PathVariable precio:Double): productoModel?{
-        return productoService.getProducto(precio)
+        return productoService.getProductoByPrecio(precio)
     }
 
     @GetMapping("/{descripcion}")
@@ -24,7 +24,7 @@ class productoController (val productoService: productoService){
 
     @GetMapping("/{stock}")
     fun getStock(@PathVariable stock:Number): productoModel?{
-        return productoService.getProducto(stock)
+        return productoService.getProductoByStock(stock)
     }
 
     @GetMapping
