@@ -12,7 +12,7 @@ class productoModel (
     var nombre: String? = null,
     var precio: Double? = null,
     var descripcion: String? = null,
-    var stock: Number? = null,
+    var stock: Short? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idHerramienta")

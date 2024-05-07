@@ -2,13 +2,14 @@ package api.ferremas.ferrmas.token
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 
 @Entity
 @Table(name="token")
 class TokenModel (
-    @Id @GeneratedValue(strategy = GenerationType.UUID) var id: UUID? = null,
-    var fechaVencimiento: LocalDateTime = LocalDateTime.now().plusDays(14)
+    @Id @GeneratedValue(strategy = GenerationType.UUID) var token: UUID? = null,
+    var fechaVencimiento: LocalDateTime = LocalDateTime.now().plusDays(14),
+    var gmailUsuario: String? = null
 ){
 }
