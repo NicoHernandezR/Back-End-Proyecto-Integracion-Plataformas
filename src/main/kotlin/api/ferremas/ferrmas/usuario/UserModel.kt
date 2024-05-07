@@ -1,8 +1,16 @@
 package api.ferremas.ferrmas.usuario
 
 import api.ferremas.ferrmas.tipoUsuario.TipoUsuarioModel
-import jakarta.persistence.*
-import api.ferremas.ferrmas.usuario.UserModel
+import com.fasterxml.jackson.annotation.JsonIdentityReference
+import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+import jakarta.persistence.GenerationType
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
 
 
 @Entity
@@ -15,8 +23,10 @@ class UserModel (
     var apmaterno: String? = null,
     var gmail: String? = null,
     var password: String? = null,
+    @JsonProperty("tipoUsuarioId")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoUsuarioId")
-    val tipoUsuario: TipoUsuarioModel)
+    val tipoUsuarioId: TipoUsuarioModel)
 {
 }
