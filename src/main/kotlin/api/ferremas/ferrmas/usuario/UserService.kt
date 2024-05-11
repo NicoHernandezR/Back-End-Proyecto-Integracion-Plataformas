@@ -18,7 +18,6 @@ class UserService (val userRepository: IUUserRepository, val tokenRepository: To
 
     fun login(gmail: String, password: String): TokenModel? {
         val user: UserModel? = userRepository.findByGmailAndPassword(gmail, password)
-
         if (user != null) {
             val token = TokenModel(gmailUsuario = gmail)
             return tokenRepository.save(token)
