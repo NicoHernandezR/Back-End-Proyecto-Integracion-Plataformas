@@ -9,7 +9,7 @@ import java.util.*
 @Table(name="token")
 class TokenModel (
     @Id @GeneratedValue(strategy = GenerationType.UUID) var token: UUID? = null,
-    var fechaVencimiento: LocalDateTime = LocalDateTime.now().plusDays(14),
+    var fechaVencimiento: LocalDateTime = LocalDateTime.now().plusDays(365),
     var gmailUsuario: String? = null
 ){
 }

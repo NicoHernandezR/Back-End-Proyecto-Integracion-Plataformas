@@ -1,5 +1,8 @@
 package api.ferremas.ferrmas.token
 
-@Target(AnnotationTarget.VALUE_PARAMETER)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Token
+import java.util.*
+
+
+class Token() {
+    val token: UUID? = null
+}

@@ -22,7 +22,10 @@ class productoService (val productoRepository: productoRepository){
         return productoRepository.filtrarProductos(filtros.minPrecio,
             filtros.maxPrecio,
             filtros.idMarca,
-            filtros.idHerramienta)
+            filtros.idHerramienta,
+            filtros.stockDisponible,
+            filtros.idTipoProducto,
+            filtros.nombreProd)
     }
 
 }

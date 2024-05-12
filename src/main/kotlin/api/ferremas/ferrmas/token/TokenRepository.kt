@@ -9,5 +9,9 @@ import java.util.*
 @Repository
 interface TokenRepository : JpaRepository<TokenModel, UUID>{
 
-    fun findByToken(token: UUID) : TokenModel?
+    fun findByToken(token: UUID?) : TokenModel?
+
+    fun findByGmailUsuario(gmail : String) : TokenModel?
+
+    fun deleteByGmailUsuario(gmail : String)
 }
