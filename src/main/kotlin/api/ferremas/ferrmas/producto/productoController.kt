@@ -15,9 +15,14 @@ class productoController (val productoService: productoService, val tokenService
         return ResponseEntity.ok(this.productoService.getAllProductos())
     }
 
-    @GetMapping("/{filtro}")
-    fun getAllProductosByFilter(@PathVariable filtro: String): List<productoModel>? {
-        return null
+    @GetMapping("/{codigoProducto}")
+    fun getProductoCodigo(@PathVariable codigoProducto: Long): productoModel? {
+        return productoService.getProductoCod(codigoProducto)
+    }
+
+    @GetMapping("/filtro")
+    fun filtrarProductos(@RequestBody filtros: Filtros): List<productoModel?> {
+        return productoService.filtrarProductos(filtros)
     }
 
     @PostMapping

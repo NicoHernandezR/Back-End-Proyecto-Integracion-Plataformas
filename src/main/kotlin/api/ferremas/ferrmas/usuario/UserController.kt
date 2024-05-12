@@ -1,6 +1,8 @@
 package api.ferremas.ferrmas.usuario
 
 import api.ferremas.ferrmas.token.TokenModel
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -13,12 +15,13 @@ class UserController (val userService: UserService) {
     }
 
     @PostMapping
-    fun saveUser(@RequestBody user: UserModel): UserModel {
-        return userService.saveUser(user)
+    fun saveUser(@RequestBody user: UserModel): ResponseEntity<UserModel> {
+        return ResponseEntity(userService.saveUser(user), HttpStatus.CREATED)
     }
 
+
     @PostMapping("/login")
-    fun login(@RequestBody loginUser: LoginUser): TokenModel? {
+    fun login(@RequestBody loginUser: LoginUser): ResponseEntity<TokenModel?> {
         return userService.login(loginUser.gmail, loginUser.password)
     }
 }
