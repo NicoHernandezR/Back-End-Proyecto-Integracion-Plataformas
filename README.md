@@ -9,6 +9,8 @@ Configuración del Entorno
     Versión de Java: Utiliza JDK 21.0.2 o JDK 21.0.3.
     IDE: Recomendamos utilizar IntelliJ IDEA y clonar este repositorio.
 
+Para la sentencia SQL Usar el archivo en el root de la branch Main ejecutar.sql
+
 URL del Backend
 
 El backend utiliza la siguiente URL base: http://localhost:4500
