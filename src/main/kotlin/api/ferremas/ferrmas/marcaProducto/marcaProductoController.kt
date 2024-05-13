@@ -1,6 +1,7 @@
 package api.ferremas.ferrmas.marcaProducto
 
 
+import api.ferremas.ferrmas.herramienta.herramientaModel
 import api.ferremas.ferrmas.marcaProducto.customRequestBody.SaveUpdateMarcaRequestBody
 import api.ferremas.ferrmas.responseHandler.ResponseHandler
 import api.ferremas.ferrmas.token.Token
@@ -136,6 +137,40 @@ class marcaProductoController (val marcaProductoService: marcaProductoService, v
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 null
             )
+        }
+    }
+
+    @DeleteMapping("/gmail={gmail}?id={id}")
+    fun deleteHer(@RequestBody token : Token, @PathVariable id: Long,
+                  @PathVariable gmail : String) : ResponseEntity<out Any> {
+        try {
+            tokenService.validateToken(token.token, gmail, arrayOf(1L,2L)) ?: return ResponseHandler.generarResponse(
+                "Token Invalido",
+                HttpStatus.BAD_REQUEST,
+                null
+            )
+
+            val marca: Optional<marcaProductoModel> = marcaProductoService.getById(id)
+
+            if (!marca.isPresent) {
+                return ResponseHandler.generarResponse(
+                    "No se encontraro Marca con ID: $id",
+                    HttpStatus.BAD_REQUEST,
+                    null
+                )
+            }
+
+            marcaProductoService.deleteMarcaById(id)
+            val MarcaDel : Optional<marcaProductoModel> = marcaProductoService.getById(id)
+
+            if (MarcaDel.isPresent) {
+                return ResponseHandler.generarResponse("No se pudo borrar la Marca", HttpStatus.ACCEPTED,
+                    null)
+            }
+            return ResponseHandler.generarResponse("Marca Borrado con exito", HttpStatus.ACCEPTED,
+                marca)
+        }   catch (ex: Exception) {
+            return ResponseHandler.generarResponse("Error al borrar la Marca", HttpStatus.INTERNAL_SERVER_ERROR, null)
         }
     }
 
