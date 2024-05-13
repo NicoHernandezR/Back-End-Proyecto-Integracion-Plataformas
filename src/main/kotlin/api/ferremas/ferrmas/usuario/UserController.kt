@@ -13,11 +13,18 @@ import java.util.*
 @RequestMapping("/user")
 class UserController (val userService: UserService, val tokenService: TokenService) {
 
-    @GetMapping
-    fun getUsers(@RequestBody token : Token): ResponseEntity<out Any> {
+    @GetMapping("/gmail={gmail}")
+    fun getUsers(@RequestBody token : Token, @PathVariable gmail : String): ResponseEntity<out Any> {
         try {
-            tokenService.validateToken(token.token) ?:
-            return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
+            tokenService.validateToken(token.token, gmail, arrayOf(1L)) ?:
+                return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
+
+            val users : List<UserModel> = userService.getUsers()
+
+            if(users.isEmpty()){
+                return ResponseHandler.generarResponse("No hay usuarios",HttpStatus.OK, null)
+            }
+
             return ResponseHandler.generarResponse("Enviando todos los Usuarios", HttpStatus.OK, userService.getUsers())
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al Enviar todos los Usuarios", HttpStatus.INTERNAL_SERVER_ERROR, null)
@@ -26,11 +33,14 @@ class UserController (val userService: UserService, val tokenService: TokenServi
     }
 
     @GetMapping("/{gmail}")
-    fun getUsers(@RequestBody token : Token, @PathVariable gmail : String): ResponseEntity<out Any> {
+    fun getUsersByGmail(@RequestBody token : Token, @PathVariable gmail : String): ResponseEntity<out Any> {
         try {
-            tokenService.validateToken(token.token) ?:
+            tokenService.validateToken(token.token, gmail) ?:
                 return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
-            return ResponseHandler.generarResponse("Usuaro enviado con exito", HttpStatus.OK, userService.getUserByGmail(gmail))
+            val user = userService.getUserByGmail(gmail)
+                ?: return ResponseHandler.generarResponse("Usuario no encontrado con Gmail: $gmail", HttpStatus.INTERNAL_SERVER_ERROR, null)
+
+            return ResponseHandler.generarResponse("Usuaro enviado con exito", HttpStatus.OK, user)
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al Enviar el Usuario con gmail: $gmail", HttpStatus.INTERNAL_SERVER_ERROR, null)
         }
@@ -52,17 +62,26 @@ class UserController (val userService: UserService, val tokenService: TokenServi
         try {
             val token : UUID? = requestCustom.token?.token
             val user = requestCustom.user
-            if (user != null) {
-                println(user.gmail)
-                println(user.id)
-            }
-            println(user)
+                ?: return ResponseHandler.generarResponse("Usuario no recibido",HttpStatus.BAD_REQUEST, null)
 
-            tokenService.validateToken(token) ?:
+            if(user.gmail == null) {
+                return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
+            }
+
+            tokenService.validateToken(token, user.gmail) ?:
                 return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
 
+
+            val userDb = user.gmail?.let { userService.getUserByGmail(it) }
+
+            if(userDb == null) {
+                return ResponseHandler.generarResponse("Usuario con Gmail: ${user.gmail} No encontrado", HttpStatus.BAD_REQUEST, null)
+            }
+
+            val userUp = user.let { userService.updateUser(it) }
+
             return ResponseHandler.generarResponse("Cuenta actualizada con exito", HttpStatus.OK,
-                user?.let { userService.updateUser(it) })
+                userUp)
 
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al actualizar la cuenta", HttpStatus.INTERNAL_SERVER_ERROR, null)
@@ -72,7 +91,7 @@ class UserController (val userService: UserService, val tokenService: TokenServi
     @DeleteMapping("/{gmail}")
     fun deleteUser(@RequestBody token: Token, @PathVariable gmail : String) : ResponseEntity<out Any>{
         try {
-            tokenService.validateToken(token.token) ?:
+            tokenService.validateToken(token.token, gmail) ?:
                 return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
 
             val user = userService.getUserByGmail(gmail)

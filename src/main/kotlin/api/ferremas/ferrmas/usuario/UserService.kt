@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Service
 class UserService (val userRepository: IUUserRepository, val tokenRepository: TokenRepository){
 
-    fun getUsers(): Iterable<UserModel> {
+    fun getUsers(): List<UserModel> {
         return userRepository.findAll()
     }
 

@@ -1,12 +1,14 @@
 package api.ferremas.ferrmas.producto
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
+import org.springframework.transaction.annotation.Transactional
 
 interface productoRepository : JpaRepository<productoModel, Long> {
 
-    fun findByCodigoProducto(codigoProducto : Long) : productoModel?
+    fun findByCodigoProducto(codigoProducto: Long) : productoModel?
 
     @Query("select c from productoModel c where c.codigoProducto = :codigoProducto")
     fun buscarPorCodigo(@Param("codigoProducto") codigoProducto : Long) : productoModel?
@@ -26,4 +28,22 @@ interface productoRepository : JpaRepository<productoModel, Long> {
                          @Param("stockDisponible") stockDisponible: Boolean?,
                          @Param("idTipoProducto") idTipoProducto: Long?,
                          @Param("nombreProd") nombreProd: String?): List<productoModel?>
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE productoModel p SET p.nombre = :nombre, " +
+            "p.precio = :precio, p.descripcion = :descripcion, " +
+            "p.stock = :stock, p.idHerramienta.id = :idHerramienta, " +
+            "p.idMarca.id = :idMarca WHERE p.codigoProducto = :codigoProducto")
+    fun actualizarProd(
+        @Param("codigoProducto") codigoProducto: Long?,
+        @Param("nombre") nombre: String?,
+        @Param("precio") precio: Double?,
+        @Param("descripcion") descripcion: String?,
+        @Param("stock") stock: Short?,
+        @Param("idHerramienta") idHerramienta: Long?,
+        @Param("idMarca") idMarca: Long?,
+    ): Int
+
+    fun deleteByCodigoProducto(codigoProducto: Long)
 }
