@@ -1,7 +1,8 @@
 package api.ferremas.ferrmas.herramienta
 
-import api.ferremas.ferrmas.marcaProducto.marcaProductoModel
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class herramientaService (val herramientaRepository: herramientaRepository) {
@@ -17,4 +18,22 @@ class herramientaService (val herramientaRepository: herramientaRepository) {
     fun getAllHerramientas(): List<herramientaModel>{
         return herramientaRepository.findAll()
     }
+
+    fun getHerramientaById(id:Long): Optional<herramientaModel> {
+        return herramientaRepository.findById(id)
+    }
+
+    fun updatedHer(her: herramientaModel): Int {
+        return herramientaRepository.actualizarHer(
+            her.id,
+            her.tipoHerramienta,
+            her.idTipoProducto.id
+        )
+    }
+
+    @Transactional
+    fun deleteHerById(id: Long) {
+        herramientaRepository.deleteById(id)
+    }
+
 }

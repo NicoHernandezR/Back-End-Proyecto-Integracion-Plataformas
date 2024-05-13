@@ -78,7 +78,7 @@ class productoController (val productoService: productoService, val tokenService
         }
     }
 
-    @PutMapping("/{codigoProducto}/gmail={gmail}")
+    @PutMapping("/codigoProducto={codigoProducto}?gmail={gmail}")
     fun updateProd(@RequestBody requestCustom : SaveUpdateProdRequestBody,
                    @PathVariable codigoProducto: Long, @PathVariable gmail : String
                    ) : ResponseEntity<out Any> {
@@ -92,19 +92,26 @@ class productoController (val productoService: productoService, val tokenService
                 return ResponseHandler.generarResponse("Producto no recibido",HttpStatus.BAD_REQUEST, null)
             }
 
-            productoService.getProductoCod(codigoProducto)
+            val prodDb = productoService.getProductoCod(codigoProducto)
                 ?: return ResponseHandler.generarResponse("Producto con Codigo: $codigoProducto No encontrado", HttpStatus.BAD_REQUEST, null)
 
-            val prodUp = productoService.updateProd(codigoProducto, producto)
+            producto.codigoProducto = codigoProducto
 
-            return ResponseHandler.generarResponse("Producto con Codigo: $codigoProducto actualizado", HttpStatus.CREATED, prodUp)
+            if(producto == prodDb){
+                val prodUp = productoService.updateProd(codigoProducto, producto)
+                return ResponseHandler.generarResponse("Producto con Codigo: $codigoProducto actualizado", HttpStatus.CREATED, prodUp)
+            }
+
+            return ResponseHandler.generarResponse("El producto no coincide con el ID enviado", HttpStatus.BAD_REQUEST, null)
+
+
 
         }   catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al actualizar el Producto", HttpStatus.INTERNAL_SERVER_ERROR, null)
         }
     }
 
-    @DeleteMapping("/{codigoProducto}/gmail={gmail}")
+    @DeleteMapping("/codigoProducto={codigoProducto}?gmail={gmail}")
     fun deleteProd(@RequestBody token : Token, @PathVariable codigoProducto: Long,
                    @PathVariable gmail : String) : ResponseEntity<out Any> {
         try {

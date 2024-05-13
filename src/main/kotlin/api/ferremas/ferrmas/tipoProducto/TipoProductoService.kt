@@ -22,4 +22,12 @@ class TipoProductoService(val tipoProductoRepository: TipoProductoRepository) {
     fun getById(id: Long) : Optional<TipoProductoModel> {
         return tipoProductoRepository.findById(id)
     }
+
+    fun deleteTipoProd(id: Long) {
+        return tipoProductoRepository.deleteById(id)
+    }
+
+    fun actualizarTipo(tipo: TipoProductoModel): Int {
+        return tipoProductoRepository.actualizarProd(tipo.id, tipo.tipo)
+    }
 }

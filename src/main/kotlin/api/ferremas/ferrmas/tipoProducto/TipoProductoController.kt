@@ -13,10 +13,6 @@ import java.util.*
 @RequestMapping("/tipoProducto")
 class TipoProductoController (val tipoProductoServicio: TipoProductoService, val tokenService: TokenService) {
 
-    @GetMapping("/tipo={tipo}")
-    fun getTipoProducto(@PathVariable tipo:String): TipoProductoModel? {
-        return tipoProductoServicio.getTipoProducto(tipo)
-    }
 
     @GetMapping("/id={id}?gmail={gmail}")
     fun getById(@PathVariable id : Long, @PathVariable gmail : String, @RequestBody token: Token ) : ResponseEntity<out Any> {
@@ -57,19 +53,85 @@ class TipoProductoController (val tipoProductoServicio: TipoProductoService, val
     }
 
     @PostMapping("/{gmail}")
-    fun saveUser(@RequestBody requestCustom: SaveTipoProd, @PathVariable gmail : String): ResponseEntity<out Any> {
+    fun saveTipoProd(@RequestBody requestCustom: SaveTipoProd, @PathVariable gmail : String): ResponseEntity<out Any> {
         try {
-            val tipo = requestCustom.tipoProducto
-            val token : UUID? = requestCustom.token?.token
+            val token = requestCustom.token?.token
+            val tipo = requestCustom.tipoProducto ?:
+                return ResponseHandler.generarResponse("Tipo Producto no recibido",HttpStatus.BAD_REQUEST, null)
+
 
             tokenService.validateToken(token, gmail, arrayOf(1L)) ?:
                 return ResponseHandler.generarResponse("Token Invalido", HttpStatus.BAD_REQUEST, null)
 
             return ResponseHandler.generarResponse("Tipo Producto Guardado", HttpStatus.CREATED,
-                tipo?.let { tipoProductoServicio.saveTipoProducto(it) })
+                tipo.let { tipoProductoServicio.saveTipoProducto(it) })
 
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al Guardar El tipo de Producto", HttpStatus.INTERNAL_SERVER_ERROR, null)
+        }
+    }
+
+    @PutMapping("/gmail={gmail}?id={id}")
+    fun updateTipoProd(@PathVariable gmail : String, @PathVariable id : Long,@RequestBody requestCustom: SaveTipoProd) : ResponseEntity<out Any> {
+        try {
+            val token : UUID? = requestCustom.token?.token
+            val tipo = requestCustom.tipoProducto ?:
+            return ResponseHandler.generarResponse("Tipo Producto no recibido",HttpStatus.BAD_REQUEST, null)
+
+            tokenService.validateToken(token, gmail, arrayOf(1L)) ?:
+                return ResponseHandler.generarResponse("Token Invalido", HttpStatus.BAD_REQUEST, null)
+
+            val tipoDb : Optional<TipoProductoModel> = tipoProductoServicio.getById(id)
+
+            if(!tipoDb.isPresent) {
+                return ResponseHandler.generarResponse("Tipo Producto con ID: ${id} No encontrado", HttpStatus.BAD_REQUEST, null)
+            }
+
+            tipo.id = id
+            val tipoEncontrado = tipoDb.get()
+
+            if(tipo == tipoEncontrado){
+                val tipUp = tipoProductoServicio.actualizarTipo(tipo)
+                return ResponseHandler.generarResponse("Tipo Producto Actualizado", HttpStatus.OK, tipUp)
+            }
+
+            return ResponseHandler.generarResponse("El Tipo Producto no coincide con el ID enviado", HttpStatus.BAD_REQUEST, null)
+
+
+
+
+        } catch (ex: Exception) {
+            return ResponseHandler.generarResponse("Error al Actualizar El tipo de Producto", HttpStatus.INTERNAL_SERVER_ERROR, null)
+        }
+
+
+    }
+
+    @DeleteMapping("/id={id}?gmail={gmail}")
+    fun deleteTipoProd(@PathVariable id: Long, @PathVariable gmail : String, @RequestBody token: Token) : ResponseEntity<out Any> {
+        try {
+            tokenService.validateToken(token.token, gmail, arrayOf(1L)) ?:
+            return ResponseHandler.generarResponse("Token Invalido",HttpStatus.BAD_REQUEST, null)
+
+            val tipo: Optional<TipoProductoModel> = tipoProductoServicio.getById(id)
+
+            if (!tipo.isPresent) {
+                return ResponseHandler.generarResponse("No se encontraro El Tipos Productos ID: $id", HttpStatus.BAD_REQUEST, null)
+            }
+
+            tipoProductoServicio.deleteTipoProd(id)
+            val tipoDel : Optional<TipoProductoModel> = tipoProductoServicio.getById(id)
+
+            if (tipoDel.isPresent) {
+                return ResponseHandler.generarResponse("No se pudo el tipo Producto ID: $id", HttpStatus.ACCEPTED,
+                    null)
+            }
+
+            return ResponseHandler.generarResponse("Tipo Producto Borrado con exito", HttpStatus.ACCEPTED,
+                tipo)
+
+        } catch (ex: Exception) {
+            return ResponseHandler.generarResponse("Error al Tipo Producto", HttpStatus.INTERNAL_SERVER_ERROR, null)
         }
     }
 }

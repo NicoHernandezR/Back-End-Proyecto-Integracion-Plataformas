@@ -1,22 +1,14 @@
 package api.ferremas.ferrmas.marcaProducto
 
-import api.ferremas.ferrmas.ventaDetalle.ventaDetalleModel
 import org.springframework.stereotype.Service
+import java.util.*
 
 
 @Service
 class marcaProductoService (val marcaProductoRepository: marcaProductoRepository){
 
-    fun getMarcaProductoByNombre(nombre:String): marcaProductoModel? {
-        return marcaProductoRepository.findByNombre(nombre)
-    }
-
-    fun getMarcaProductoByDireccion(direccion:String): marcaProductoModel? {
-        return marcaProductoRepository.findByNombre(direccion)
-    }
-
-    fun getMarcaProductoByGmail(gmail:String): marcaProductoModel? {
-        return marcaProductoRepository.findByNombre(gmail)
+    fun getById(id:Long): Optional<marcaProductoModel> {
+        return marcaProductoRepository.findById(id)
     }
 
     fun saveMarca(marca: marcaProductoModel): marcaProductoModel {
@@ -26,4 +18,14 @@ class marcaProductoService (val marcaProductoRepository: marcaProductoRepository
     fun getAllMarcas(): List<marcaProductoModel>{
         return marcaProductoRepository.findAll()
     }
+
+    fun updatedMarca(marca: marcaProductoModel): Int {
+        return marcaProductoRepository.actualizarMarca(
+            marca.id,
+            marca.nombre,
+            marca.gmail,
+            marca.direccion
+        )
+    }
+
 }

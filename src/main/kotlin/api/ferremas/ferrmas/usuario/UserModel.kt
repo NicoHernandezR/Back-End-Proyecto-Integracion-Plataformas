@@ -23,4 +23,19 @@ class UserModel (
     @JoinColumn(name = "tipoUsuarioId")
     val tipoUsuarioId: TipoUsuarioModel)
 {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true // Si es la misma instancia, retorna true
+        if (other !is UserModel) return false // Si el otro objeto no es de la misma clase, retorna false
+
+        // Compara las propiedades relevantes para determinar si los objetos son iguales
+        return id == other.id &&
+                pnombre == other.pnombre &&
+                snombre == other.snombre &&
+                appaterno == other.appaterno &&
+                apmaterno == other.apmaterno &&
+                gmail == other.gmail &&
+                password == other.password
+                tipoUsuarioId.id == other.tipoUsuarioId.id
+    }
 }

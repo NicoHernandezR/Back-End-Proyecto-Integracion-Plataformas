@@ -22,4 +22,18 @@ class productoModel (
     @JoinColumn(name = "idMarca")
     val idMarca: marcaProductoModel
     ){
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true // Si es la misma instancia, retorna true
+        if (other !is productoModel) return false // Si el otro objeto no es de la misma clase, retorna false
+
+        // Compara las propiedades relevantes para determinar si los objetos son iguales
+        return codigoProducto == other.codigoProducto &&
+                nombre == other.nombre &&
+                precio == other.precio &&
+                descripcion == other.descripcion &&
+                stock == other.stock &&
+                idHerramienta.id == other.idHerramienta.id &&
+                idMarca.id == other.idMarca.id
+    }
 }
