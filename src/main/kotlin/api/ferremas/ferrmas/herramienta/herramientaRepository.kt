@@ -12,7 +12,7 @@ interface herramientaRepository : JpaRepository<herramientaModel, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE herramientaModel h set h.tipoHerramienta = :tipoHerramienta, h.idTipoProducto.id = :idTipoHerramienta " +
+    @Query("UPDATE herramientaModel h set h.tipoHerramienta = :tipoHerramienta, h.idTipoProducto.id = :idTipoProducto " +
             "where h.id = :id")
     fun actualizarHer(
         @Param("id") id: Long?,

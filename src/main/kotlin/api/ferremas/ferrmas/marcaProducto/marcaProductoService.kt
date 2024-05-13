@@ -1,6 +1,7 @@
 package api.ferremas.ferrmas.marcaProducto
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 
@@ -26,6 +27,11 @@ class marcaProductoService (val marcaProductoRepository: marcaProductoRepository
             marca.gmail,
             marca.direccion
         )
+    }
+
+    @Transactional
+    fun deleteMarcaById(id: Long) {
+        marcaProductoRepository.deleteById(id)
     }
 
 }

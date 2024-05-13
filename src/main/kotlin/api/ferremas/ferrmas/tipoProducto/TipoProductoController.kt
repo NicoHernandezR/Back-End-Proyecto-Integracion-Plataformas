@@ -14,7 +14,7 @@ import java.util.*
 class TipoProductoController (val tipoProductoServicio: TipoProductoService, val tokenService: TokenService) {
 
 
-    @GetMapping("/id={id}?gmail={gmail}")
+    @GetMapping("/{id}/{gmail}")
     fun getById(@PathVariable id : Long, @PathVariable gmail : String, @RequestBody token: Token ) : ResponseEntity<out Any> {
         try {
             tokenService.validateToken(token.token, gmail, arrayOf(1L)) ?:
@@ -71,7 +71,7 @@ class TipoProductoController (val tipoProductoServicio: TipoProductoService, val
         }
     }
 
-    @PutMapping("/gmail={gmail}?id={id}")
+    @PutMapping("/{gmail}/{id}")
     fun updateTipoProd(@PathVariable gmail : String, @PathVariable id : Long,@RequestBody requestCustom: SaveTipoProd) : ResponseEntity<out Any> {
         try {
             val token : UUID? = requestCustom.token?.token
@@ -88,17 +88,9 @@ class TipoProductoController (val tipoProductoServicio: TipoProductoService, val
             }
 
             tipo.id = id
-            val tipoEncontrado = tipoDb.get()
 
-            if(tipo == tipoEncontrado){
-                val tipUp = tipoProductoServicio.actualizarTipo(tipo)
-                return ResponseHandler.generarResponse("Tipo Producto Actualizado", HttpStatus.OK, tipUp)
-            }
-
-            return ResponseHandler.generarResponse("El Tipo Producto no coincide con el ID enviado", HttpStatus.BAD_REQUEST, null)
-
-
-
+            val tipUp = tipoProductoServicio.actualizarTipo(tipo)
+            return ResponseHandler.generarResponse("Tipo Producto Actualizado", HttpStatus.OK, tipUp)
 
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al Actualizar El tipo de Producto", HttpStatus.INTERNAL_SERVER_ERROR, null)
@@ -107,7 +99,7 @@ class TipoProductoController (val tipoProductoServicio: TipoProductoService, val
 
     }
 
-    @DeleteMapping("/id={id}?gmail={gmail}")
+    @DeleteMapping("/{id}/{gmail}")
     fun deleteTipoProd(@PathVariable id: Long, @PathVariable gmail : String, @RequestBody token: Token) : ResponseEntity<out Any> {
         try {
             tokenService.validateToken(token.token, gmail, arrayOf(1L)) ?:
