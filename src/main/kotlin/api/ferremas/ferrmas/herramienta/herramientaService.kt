@@ -25,9 +25,9 @@ class herramientaService (val herramientaRepository: herramientaRepository) {
 
     fun updatedHer(her: herramientaModel): Int {
         return herramientaRepository.actualizarHer(
-            her.id,
             her.tipoHerramienta,
-            her.idTipoProducto.id
+            her.idTipoProducto.id,
+            her.id
         )
     }
 

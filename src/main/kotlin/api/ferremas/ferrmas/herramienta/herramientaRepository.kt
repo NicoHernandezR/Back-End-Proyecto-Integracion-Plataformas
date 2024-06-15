@@ -10,13 +10,12 @@ interface herramientaRepository : JpaRepository<herramientaModel, Long> {
 
     fun findByTipoHerramienta(tipoHerramienta : String) : herramientaModel?
 
-    @Modifying
     @Transactional
-    @Query("UPDATE herramientaModel h set h.tipoHerramienta = :tipoHerramienta, h.idTipoProducto.id = :idTipoHerramienta " +
-            "where h.id = :id")
+    @Modifying
+    @Query("UPDATE herramientaModel h SET h.tipoHerramienta = :tipoHerramienta, h.idTipoProducto.id = :idTipoHerramienta WHERE h.id = :id")
     fun actualizarHer(
-        @Param("id") id: Long?,
         @Param("tipoHerramienta") tipoHerramienta: String?,
-        @Param("idTipoProducto") idTipoProducto: Long?
-    ) : Int
+        @Param("idTipoHerramienta") idTipoHerramienta: Long?,
+        @Param("id") id: Long?
+    ): Int
 }
