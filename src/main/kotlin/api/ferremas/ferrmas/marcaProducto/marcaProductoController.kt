@@ -17,7 +17,7 @@ import java.util.*
 class marcaProductoController (val marcaProductoService: marcaProductoService, val tokenService: TokenService) {
 
 
-    @GetMapping("/id={id}?gmail={gmail}")
+    @GetMapping("/{id}/{gmail}")
     fun getById(@PathVariable id: Long, @PathVariable gmail: String, @RequestBody token: Token ) : ResponseEntity<out Any> {
         try {
             tokenService.validateToken(token.token, gmail, arrayOf(1L, 2L, 3L))
@@ -96,7 +96,7 @@ class marcaProductoController (val marcaProductoService: marcaProductoService, v
         }
     }
 
-    @PutMapping("/gmail={gmail}?id={id}")
+    @PutMapping("/{gmail}/{id}")
     fun updateMarca(
         @PathVariable gmail: String,
         @PathVariable id: Long,
@@ -115,22 +115,18 @@ class marcaProductoController (val marcaProductoService: marcaProductoService, v
 
             val marDb: Optional<marcaProductoModel> = marcaProductoService.getById(id)
 
-            marca.id = id
-            if (marca == marDb.get()) {
-                val prodUp = marcaProductoService.updatedMarca(marca)
-                return ResponseHandler.generarResponse(
-                    "Marca con ID: $id actualizada",
-                    HttpStatus.CREATED,
-                    prodUp
-                )
+            if(!marDb.isPresent) {
+                return ResponseHandler.generarResponse("No existe marca con ID: $id", HttpStatus.BAD_REQUEST, null)
             }
 
-            return ResponseHandler.generarResponse(
-                "La Marca no coincide con el ID enviado",
-                HttpStatus.BAD_REQUEST,
-                null
-            )
+            marca.id = id
 
+            val prodUp = marcaProductoService.updatedMarca(marca)
+            return ResponseHandler.generarResponse(
+                "Marca con ID: $id actualizada",
+                HttpStatus.CREATED,
+                prodUp
+            )
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse(
                 "Error al Actualizar la Marca",
@@ -140,7 +136,7 @@ class marcaProductoController (val marcaProductoService: marcaProductoService, v
         }
     }
 
-    @DeleteMapping("/gmail={gmail}?id={id}")
+    @DeleteMapping("/{gmail}/{id}")
     fun deleteHer(@RequestBody token : Token, @PathVariable id: Long,
                   @PathVariable gmail : String) : ResponseEntity<out Any> {
         try {

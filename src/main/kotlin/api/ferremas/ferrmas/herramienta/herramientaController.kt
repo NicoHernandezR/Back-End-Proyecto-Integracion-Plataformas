@@ -14,7 +14,7 @@ import java.util.*
 @RequestMapping("/herramienta")
 class herramientaController(val herramientaService: herramientaService, val tokenService: TokenService) {
 
-    @GetMapping("/id={id}?gmail={gmail}")
+    @GetMapping("/{id}/{gmail}")
     fun getHerramienta(
         @PathVariable id: Long,
         @PathVariable gmail: String,
@@ -98,7 +98,7 @@ class herramientaController(val herramientaService: herramientaService, val toke
         }
     }
 
-    @PutMapping("/gmail={gmail}?id={id}")
+    @PutMapping("/{gmail}/{id}")
     fun updateHerramienta(
         @PathVariable gmail: String,
         @PathVariable id: Long,
@@ -117,20 +117,17 @@ class herramientaController(val herramientaService: herramientaService, val toke
 
             val herDb: Optional<herramientaModel> = herramientaService.getHerramientaById(id)
 
-            herramienta.id = id
-            if (herramienta == herDb.get()) {
-                val prodUp = herramientaService.updatedHer(herramienta)
-                return ResponseHandler.generarResponse(
-                    "Herramienta con ID: $id actualizada",
-                    HttpStatus.CREATED,
-                    prodUp
-                )
+            if(!herDb.isPresent) {
+                return ResponseHandler.generarResponse("No existe herramienta con ID: $id", HttpStatus.BAD_REQUEST, null)
             }
 
+            herramienta.id = id
+
+            val herUp = herramientaService.updatedHer(herramienta)
             return ResponseHandler.generarResponse(
-                "La herramienta no coincide con el ID enviado",
-                HttpStatus.BAD_REQUEST,
-                null
+                "Herramienta con ID: $id actualizada",
+                HttpStatus.CREATED,
+                herUp
             )
 
         } catch (ex: Exception) {
@@ -142,7 +139,7 @@ class herramientaController(val herramientaService: herramientaService, val toke
         }
     }
 
-    @DeleteMapping("/gmail={gmail}?id={id}")
+    @DeleteMapping("/{gmail}/{id}")
     fun deleteHer(@RequestBody token : Token, @PathVariable id: Long,
                    @PathVariable gmail : String) : ResponseEntity<out Any> {
         try {
