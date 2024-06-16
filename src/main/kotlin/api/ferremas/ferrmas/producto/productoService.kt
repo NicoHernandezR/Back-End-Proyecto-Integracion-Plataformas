@@ -44,4 +44,8 @@ class productoService (val productoRepository: productoRepository){
         return productoRepository.deleteByCodigoProducto(codigoProducto)
     }
 
+    fun getLastId(): Long{
+        return productoRepository.getLastId()
+    }
+
 }

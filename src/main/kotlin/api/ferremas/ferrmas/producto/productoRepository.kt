@@ -46,4 +46,7 @@ interface productoRepository : JpaRepository<productoModel, Long> {
     ): Int
 
     fun deleteByCodigoProducto(codigoProducto: Long)
+
+    @Query("SELECT max(p.codigoProducto) FROM productoModel p")
+    fun getLastId() : Long
 }

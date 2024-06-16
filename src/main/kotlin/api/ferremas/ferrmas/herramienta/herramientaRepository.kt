@@ -18,4 +18,7 @@ interface herramientaRepository : JpaRepository<herramientaModel, Long> {
         @Param("idTipoHerramienta") idTipoHerramienta: Long?,
         @Param("id") id: Long?
     ): Int
+
+    @Query("SELECT max(h.id) FROM herramientaModel h")
+    fun getLastId() : Long
 }

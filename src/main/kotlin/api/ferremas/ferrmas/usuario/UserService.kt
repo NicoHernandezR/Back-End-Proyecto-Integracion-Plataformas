@@ -64,4 +64,9 @@ class UserService (val userRepository: IUUserRepository, val tokenRepository: To
         val tokenSaved = tokenRepository.save(tokenGenerated)
         return ResponseHandler.generarResponse("Acceso Autorizado", HttpStatus.ACCEPTED, tokenSaved)
     }
+
+    fun getLastId(): Long{
+        return userRepository.getLastId()
+    }
+
 }

@@ -34,4 +34,8 @@ class marcaProductoService (val marcaProductoRepository: marcaProductoRepository
         marcaProductoRepository.deleteById(id)
     }
 
+    fun getLastId(): Long{
+        return marcaProductoRepository.getLastId()
+    }
+
 }

@@ -36,4 +36,8 @@ class herramientaService (val herramientaRepository: herramientaRepository) {
         herramientaRepository.deleteById(id)
     }
 
+    fun getLastId(): Long{
+        return herramientaRepository.getLastId()
+    }
+
 }

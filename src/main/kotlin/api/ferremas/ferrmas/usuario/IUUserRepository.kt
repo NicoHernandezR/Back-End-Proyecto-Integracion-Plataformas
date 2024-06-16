@@ -35,4 +35,7 @@ interface IUUserRepository : JpaRepository<UserModel, Long>{
         @Param("tipoUsuarioId") tipoUsuarioId : Long?
     ): Int
 
+    @Query("SELECT max(u.id) FROM UserModel u")
+    fun getLastId() : Long
+
 }

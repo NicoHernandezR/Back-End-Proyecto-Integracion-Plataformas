@@ -5,7 +5,7 @@ INSERT INTO tp_usuario (tipo) VALUES
 ('Cliente');
 
 -- Insertar usuarios
-INSERT INTO user (apmaterno, appaterno, gmail, password, pnombre, snombre, tipo_usuario_id) VALUES
+INSERT INTO usuario (apmaterno, appaterno, gmail, password, pnombre, snombre, tipo_usuario_id) VALUES
 ('González', 'Pérez', 'gonzalez@example.com', 'contrasena', 'Juan', 'Carlos', 1),
 ('Rodríguez', 'Martínez', 'rodriguez@example.com', 'contrasena', 'María', 'Fernanda', 2),
 ('López', 'García', 'lopez@example.com', 'contrasena', 'Pedro', 'Antonio', 3);

@@ -30,4 +30,8 @@ class TipoProductoService(val tipoProductoRepository: TipoProductoRepository) {
     fun actualizarTipo(tipo: TipoProductoModel): Int {
         return tipoProductoRepository.actualizarProd(tipo.id, tipo.tipo)
     }
+
+    fun getLastId(): Long{
+        return tipoProductoRepository.getLastId()
+    }
 }

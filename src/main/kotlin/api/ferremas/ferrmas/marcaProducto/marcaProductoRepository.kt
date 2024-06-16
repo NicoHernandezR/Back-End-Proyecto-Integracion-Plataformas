@@ -18,4 +18,8 @@ interface marcaProductoRepository : JpaRepository<marcaProductoModel, Long> {
         @Param("gmail") gmail: String?,
         @Param("direccion") direccion: String?
     ) : Int
+
+    @Query("SELECT max(m.id) FROM marcaProductoModel m")
+    fun getLastId() : Long
+
 }
