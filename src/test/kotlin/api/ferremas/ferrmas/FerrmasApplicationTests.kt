@@ -24,12 +24,6 @@ import kotlin.random.Random
 @SpringBootTest
 class FerrmasApplicationTests() {
 
-    ///producto
-    //user
-    //herramienta
-    //marcaProducto
-    //tipoProducto
-
 
     @Autowired
     lateinit var productoService: productoService
@@ -108,7 +102,7 @@ class FerrmasApplicationTests() {
         val dominio = "@example.com"
 
         val nombreAleatorio = nombres.random()
-        val numeroAleatorio = Random.nextInt(1000, 9999) // Genera un número aleatorio de 1000 a 9999
+        val numeroAleatorio = Random.nextInt(1000, 9999)
 
         val gmail = nombreAleatorio + numeroAleatorio.toString() + dominio
 

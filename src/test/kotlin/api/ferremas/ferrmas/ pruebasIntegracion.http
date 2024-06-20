@@ -1,0 +1,108 @@
+
+POST http://localhost:4500/producto/gonzalez@example.com
+Content-Type: application/json
+
+{
+  "token": {
+    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+  },
+  "producto": {
+    "codigoProducto": 123,
+    "nombre": "Martillo de carpintero",
+    "precio": 20.99,
+    "descripcion": "Martillo de acero forjado",
+    "stock": 100,
+    "idHerramienta": {
+      "id": 1,
+      "tipoHerramienta": "Martillo",
+      "idTipoProducto": {
+        "id": 1,
+        "tipo": "Herramienta"
+      }
+    },
+    "idMarca": {
+      "id": 2,
+      "direccion": "Avenida Principal 456",
+      "gmail": "info@marcamartillos.com",
+      "nombre": "Herramientas Profesionales"
+    }
+  }
+}
+
+
+
+###
+POST http://localhost:4500/herramienta/gonzalez@example.com
+Content-Type: application/json
+
+{
+  "token": {
+    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+  },
+  "herramienta": {
+    "id": 1,
+    "tipoHerramienta": "Martillo",
+    "idTipoProducto": {
+      "id": 1,
+      "tipo": "Herramienta"
+    }
+  }
+}
+
+
+
+###
+POST http://localhost:4500/user
+Content-Type: application/json
+
+{
+  "pnombre": "John",
+  "snombre": "William",
+  "appaterno": "Doe",
+  "apmaterno": "Smith",
+  "gmail": "john.doe@example.com",
+  "password": "secretpassword",
+  "tipoUsuarioId": {
+    "id" : 1,
+    "tipo" : "Administrador"}
+}
+
+
+###
+POST http://localhost:4500/marcaProducto/gonzalez@example.com
+Content-Type: application/json
+
+{
+  "token": {
+    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+  },
+  "marca": {
+    "nombre": "Marca Ejemplo",
+    "direccion": "Avenida Principal 123",
+    "gmail": "info@marcaejemplo.com"
+  }
+}
+
+
+###
+POST http://localhost:4500/tipoProducto/gonzalez@example.com
+Content-Type: application/json
+
+{
+  "token": {
+    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+  },
+  "tipoProducto": {
+    "tipo": "Mazo"
+  }
+}
+
+###
+POST http://localhost:4500/user/login
+Content-Type: application/json
+
+{
+  "gmail": "gonzalez@example.com",
+  "password": "contrasena"
+}
+
