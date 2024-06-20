@@ -1,10 +1,10 @@
 
-POST http://localhost:4500/producto/gonzalez@example.com
+POST http://localhost:4500/producto/Admin@Admin.com
 Content-Type: application/json
 
 {
   "token": {
-    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+    "token": "678d821c-d93f-4609-8214-f0721755587d"
   },
   "producto": {
     "codigoProducto": 123,
@@ -32,12 +32,12 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:4500/herramienta/gonzalez@example.com
+POST http://localhost:4500/herramienta/Admin@Admin.com
 Content-Type: application/json
 
 {
   "token": {
-    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+    "token": "678d821c-d93f-4609-8214-f0721755587d"
   },
   "herramienta": {
     "id": 1,
@@ -69,12 +69,12 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:4500/marcaProducto/gonzalez@example.com
+POST http://localhost:4500/marcaProducto/Admin@Admin.com
 Content-Type: application/json
 
 {
   "token": {
-    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+    "token": "678d821c-d93f-4609-8214-f0721755587d"
   },
   "marca": {
     "nombre": "Marca Ejemplo",
@@ -85,12 +85,12 @@ Content-Type: application/json
 
 
 ###
-POST http://localhost:4500/tipoProducto/gonzalez@example.com
+POST http://localhost:4500/tipoProducto/Admin@Admin.com
 Content-Type: application/json
 
 {
   "token": {
-    "token": "a5e519ac-4e94-4cd6-961f-7ea4b0b0b899"
+    "token": "678d821c-d93f-4609-8214-f0721755587d"
   },
   "tipoProducto": {
     "tipo": "Mazo"

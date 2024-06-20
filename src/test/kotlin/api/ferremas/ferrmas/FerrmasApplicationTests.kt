@@ -9,6 +9,7 @@ import api.ferremas.ferrmas.producto.productoService
 import api.ferremas.ferrmas.tipoProducto.TipoProductoModel
 import api.ferremas.ferrmas.tipoProducto.TipoProductoService
 import api.ferremas.ferrmas.tipoUsuario.TipoUsuarioModel
+import api.ferremas.ferrmas.token.TokenModel
 import api.ferremas.ferrmas.token.TokenService
 import api.ferremas.ferrmas.usuario.UserModel
 import api.ferremas.ferrmas.usuario.UserService
@@ -42,6 +43,8 @@ class FerrmasApplicationTests() {
 
     @Autowired
     lateinit var tokenService : TokenService
+
+    var tokenAvalidar : UUID? = null
 
 
     @Test
@@ -157,29 +160,41 @@ class FerrmasApplicationTests() {
     }
 
     @Test
-    fun validarToken() {
-        val tokenUser: UUID = UUID.fromString("a5e519ac-4e94-4cd6-961f-7ea4b0b0b899")
-        val gmail = "gonzalez@example.com"
-        val newToken = tokenService.validateToken(tokenUser, gmail)
-        assert(tokenUser == newToken?.token) { "El token no es valido"}
-    }
-
-    @Test
     fun validarLogin() {
         val gmail = "gonzalez@example.com"
         val pw = "contrasena"
 
         // Ejecutar la función login y obtener la respuesta
-        val response: ResponseEntity<out Any> = userService.login(gmail, pw)
+        val response: ResponseEntity<Map<String, Any?>> = userService.login(gmail, pw) as ResponseEntity<Map<String, Any?>>
 
         // Verificar el mensaje de respuesta
+
         val mensaje: String = response.body?.toString() ?: ""
         val status: HttpStatusCode = response.statusCode
 
         // Asserts para verificar el resultado esperado
         assert(status == HttpStatus.ACCEPTED) { "Se esperaba HttpStatus.ACCEPTED pero se obtuvo $status" }
         assert(mensaje.contains("Acceso Autorizado")) { "Se esperaba 'Acceso Autorizado' en el mensaje pero se obtuvo '$mensaje'" }
+        val body = response.body
+        if (body != null) {
+            val token : TokenModel? = body["data"] as TokenModel?
+            tokenAvalidar = token?.token
+        }
+
+
 
     }
 
+
+    @Test
+    fun validarToken() {
+        val gmail = "gonzalez@example.com"
+        val newToken = tokenService.validateToken(tokenAvalidar, gmail)
+        assert(tokenAvalidar == newToken?.token) { "El token no es valido"}
+    }
+
+
+
 }
+
+

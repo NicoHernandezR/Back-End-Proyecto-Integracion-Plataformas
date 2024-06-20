@@ -5,7 +5,7 @@ Configuración del Entorno
     Conexión en Workbench: Crea una conexión en MySQL Workbench 8.0 con los siguientes detalles:
         Nombre: localhost
         Usuario: root
-        Contraseña: (sin contraseña)
+        Contraseña: 1234
     Versión de Java: Utiliza JDK 21.0.2 o JDK 21.0.3.
     IDE: Recomendamos utilizar IntelliJ IDEA y clonar este repositorio.
 

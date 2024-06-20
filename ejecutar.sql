@@ -12,8 +12,8 @@ INSERT INTO tp_usuario (tipo) VALUES
 INSERT INTO usuario (apmaterno, appaterno, gmail, password, pnombre, snombre, tipo_usuario_id) VALUES
                                                                                                    ('González', 'Pérez', 'gonzalez@example.com', 'contraseña', 'Juan', 'Carlos', 1),
                                                                                                    ('Rodríguez', 'Martínez', 'rodriguez@example.com', 'contraseña', 'María', 'Fernanda', 2),
-                                                                                                   ('López', 'García', 'lopez@example.com', 'contraseña', 'Pedro', 'Antonio', 3);
-
+                                                                                                   ('López', 'García', 'lopez@example.com', 'contraseña', 'Pedro', 'Antonio', 3),
+                                                                                                   ('Admin', 'Pérez', 'Admin@Admin.com', 'contraseña', 'Admin', 'Carlos', 1);
 -- Insertar tipos de producto
 INSERT INTO tipo_producto (tipo) VALUES
                                      ('Herramienta'),
@@ -54,3 +54,6 @@ INSERT INTO venta_detalle (cant_producto, precio_detalle, id_producto, id_venta)
                                                                                      ('1', 20.99, 1, 1),
                                                                                      ('2', 25.00, 2, 2),
                                                                                      ('3', 35.60, 3, 3);
+
+INSERT INTO token (token, fecha_vencimiento, gmail_usuario)
+VALUES (UNHEX(REPLACE('678d821c-d93f-4609-8214-f0721755587d', '-', '')), '2025-06-20T19:01:25', 'Admin@Admin.com');

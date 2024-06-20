@@ -117,8 +117,6 @@ class UserController (val userService: UserService, val tokenService: TokenServi
     @PostMapping("/login")
     fun login(@RequestBody loginUser: LoginUser): ResponseEntity<out Any> {
         try{
-            println(loginUser.gmail)
-            println(loginUser.password)
             return userService.login(loginUser.gmail, loginUser.password)
         } catch (ex: Exception) {
             return ResponseHandler.generarResponse("Error al logearse", HttpStatus.INTERNAL_SERVER_ERROR, null)
